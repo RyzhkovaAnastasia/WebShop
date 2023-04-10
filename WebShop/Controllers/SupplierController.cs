@@ -5,7 +5,7 @@ namespace WebShop.Controllers
 {
     public class SupplierController : Controller
     {
-        readonly private ISupplierService _supplierService;
+        private readonly ISupplierService _supplierService;
         public SupplierController(ISupplierService supplierService)
         {
             _supplierService = supplierService;

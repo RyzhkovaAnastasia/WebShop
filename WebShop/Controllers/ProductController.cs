@@ -5,16 +5,28 @@ namespace WebShop.Controllers
 {
     public class ProductController : Controller
     {
-        readonly private IProductService _productService;
-        public ProductController(IProductService productService)
+        private readonly IProductService _productService;
+        private readonly int _productsOnPage = 0;
+
+        public ProductController(IProductService productService, IConfiguration configuration = null)
         {
             _productService = productService;
+            _productsOnPage = configuration.GetValue<int>("Values:ProductsOnPage");
         }
 
         public async Task<ActionResult> Index()
         {
-            var products = await _productService.GetAsync();
-            return View(products);
+            if (_productsOnPage == 0)
+            {
+                return View(await _productService.GetAsync());
+            }
+            else
+            {
+                var products = await _productService.GetAsync();
+                var productsOnPage = products.Take(Math.Abs(_productsOnPage));
+
+                return View(productsOnPage);
+            }
         }
 
         public ActionResult Details(int id)

@@ -5,7 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-_ = new CoreDependencyResolver(builder.Services);
+var connectionString = builder.Configuration.GetValue<string>("ConnectionStrings:NorthwindConnectionString");
+_ = new CoreDependencyResolver(builder.Services, connectionString);
 
 var app = builder.Build();
 

@@ -5,7 +5,7 @@ namespace WebShop.Controllers
 {
     public class CategoryController : Controller
     {
-        readonly private ICategoryService _categoryService;
+        private readonly ICategoryService _categoryService;
         public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;

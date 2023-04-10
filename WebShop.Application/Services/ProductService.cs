@@ -6,7 +6,7 @@ namespace WebShop.Core.Services
 {
     public class ProductService : IProductService
     {
-        readonly private IRepository<Product> _productRepository;
+        private readonly IRepository<Product> _productRepository;
 
         public ProductService(IRepository<Product> productRepository)
         {
@@ -17,7 +17,7 @@ namespace WebShop.Core.Services
         {
             var products = await _productRepository.GetAsync();
 
-            if(products != null)
+            if (products != null)
             {
                 return products;
             }

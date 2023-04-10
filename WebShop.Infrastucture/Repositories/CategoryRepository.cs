@@ -7,9 +7,9 @@ namespace WebShop.Infrastucture.Repositories
 {
     internal class CategoryRepository : IRepository<Category>
     {
-        readonly private NorthwindDbContext _context;
-        public CategoryRepository(NorthwindDbContext context) 
-        { 
+        private readonly NorthwindDbContext _context;
+        public CategoryRepository(NorthwindDbContext context)
+        {
             _context = context;
         }
 

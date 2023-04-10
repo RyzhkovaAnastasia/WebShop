@@ -9,16 +9,19 @@ namespace WebShop.Core.Configs
 {
     public class InfrastructureDependencyResolver
     {
-        public InfrastructureDependencyResolver(IServiceCollection serviceBuilder) 
+        public InfrastructureDependencyResolver(IServiceCollection serviceBuilder, string dbConnectionString)
         {
             serviceBuilder.AddTransient<IRepository<Product>, ProductRepository>();
             serviceBuilder.AddTransient<IRepository<Category>, CategoryRepository>();
             serviceBuilder.AddTransient<IRepository<Supplier>, SupplierRepository>();
 
-            serviceBuilder.AddDbContext<NorthwindDbContext>(options =>
-                options
-                .UseLazyLoadingProxies()
-                .UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Northwind;Trusted_Connection=True;"));
+            if (dbConnectionString != null)
+            {
+                serviceBuilder.AddDbContext<NorthwindDbContext>(options =>
+                    options
+                    .UseLazyLoadingProxies()
+                    .UseSqlServer(dbConnectionString));
+            }
         }
     }
 }

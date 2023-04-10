@@ -6,9 +6,9 @@ namespace WebShop.Core.Configs
 {
     public class CoreDependencyResolver
     {
-        public CoreDependencyResolver(IServiceCollection serviceBuilder) 
+        public CoreDependencyResolver(IServiceCollection serviceBuilder, string dbConnectionString)
         {
-            _ = new InfrastructureDependencyResolver(serviceBuilder);
+            _ = new InfrastructureDependencyResolver(serviceBuilder, dbConnectionString);
 
             serviceBuilder.AddTransient<IProductService, ProductService>();
             serviceBuilder.AddTransient<ICategoryService, CategoryService>();

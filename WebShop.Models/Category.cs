@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebShop.Models
 {
@@ -6,6 +7,7 @@ namespace WebShop.Models
     {
         public int CategoryId { get; set; }
 
+        [Required]
         [DisplayName("Category name")]
         public string CategoryName { get; set; }
 

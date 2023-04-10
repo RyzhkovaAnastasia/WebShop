@@ -6,7 +6,7 @@ namespace WebShop.Core.Services
 {
     public class SupplierService : ISupplierService
     {
-        readonly private IRepository<Supplier> _supplierRepository;
+        private readonly IRepository<Supplier> _supplierRepository;
 
         public SupplierService(IRepository<Supplier> supplierRepository)
         {

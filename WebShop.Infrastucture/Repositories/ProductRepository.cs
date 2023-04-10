@@ -7,7 +7,7 @@ namespace WebShop.Infrastucture.Repositories
 {
     internal class ProductRepository : IRepository<Product>
     {
-        readonly private NorthwindDbContext _context;
+        private readonly NorthwindDbContext _context;
         public ProductRepository(NorthwindDbContext context)
         {
             _context = context;

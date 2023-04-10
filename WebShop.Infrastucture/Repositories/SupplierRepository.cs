@@ -7,9 +7,9 @@ namespace WebShop.Infrastucture.Repositories
 {
     internal class SupplierRepository : IRepository<Supplier>
     {
-        readonly private NorthwindDbContext _context;
-        public SupplierRepository(NorthwindDbContext context) 
-        { 
+        private readonly NorthwindDbContext _context;
+        public SupplierRepository(NorthwindDbContext context)
+        {
             _context = context;
         }
 

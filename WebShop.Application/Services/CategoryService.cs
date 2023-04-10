@@ -6,7 +6,7 @@ namespace WebShop.Core.Services
 {
     public class CategoryService : ICategoryService
     {
-        readonly private IRepository<Category> _categoryRepository;
+        private readonly IRepository<Category> _categoryRepository;
 
         public CategoryService(IRepository<Category> categoryRepository)
         {

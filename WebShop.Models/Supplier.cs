@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebShop.Models
 {
@@ -7,6 +7,7 @@ namespace WebShop.Models
     {
         public int SupplierId { get; set; }
 
+        [Required]
         [DisplayName("Company name")]
         public string CompanyName { get; set; }
 
