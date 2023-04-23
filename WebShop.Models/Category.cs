@@ -11,9 +11,9 @@ namespace WebShop.Models
         [DisplayName("Category name")]
         public string CategoryName { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public byte[] Picture { get; set; }
+        public byte[]? Picture { get; set; }
 
         public virtual IEnumerable<Product> Products { get; set; }
     }

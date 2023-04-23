@@ -1,4 +1,5 @@
-﻿using WebShop.Core.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using WebShop.Core.Interfaces;
 using WebShop.Infrastucture.Interfaces;
 using WebShop.Models;
 
@@ -8,9 +9,12 @@ namespace WebShop.Core.Services
     {
         private readonly IRepository<Supplier> _supplierRepository;
 
-        public SupplierService(IRepository<Supplier> supplierRepository)
+        private readonly ILogger<SupplierService> _logger;
+
+        public SupplierService(IRepository<Supplier> supplierRepository, ILogger<SupplierService> logger)
         {
             _supplierRepository = supplierRepository;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<Supplier>> GetAsync()

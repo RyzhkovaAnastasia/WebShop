@@ -1,4 +1,5 @@
-﻿using WebShop.Core.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using WebShop.Core.Interfaces;
 using WebShop.Infrastucture.Interfaces;
 using WebShop.Models;
 
@@ -8,9 +9,12 @@ namespace WebShop.Core.Services
     {
         private readonly IRepository<Category> _categoryRepository;
 
-        public CategoryService(IRepository<Category> categoryRepository)
+        private readonly ILogger<CategoryService> _logger;
+
+        public CategoryService(IRepository<Category> categoryRepository, ILogger<CategoryService> logger)
         {
             _categoryRepository = categoryRepository;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<Category>> GetAsync()

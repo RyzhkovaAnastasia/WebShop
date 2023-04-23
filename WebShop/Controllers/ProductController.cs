@@ -1,93 +1,91 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebShop.Core.Exceptions;
 using WebShop.Core.Interfaces;
+using WebShop.Mappers;
+using WebShop.Models;
 
 namespace WebShop.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+
+        private readonly ProductMapper _productMapper;
+
         private readonly int _productsOnPage = 0;
 
-        public ProductController(IProductService productService, IConfiguration configuration = null)
+        public ProductController(
+            IProductService productService,
+            ProductMapper productMapper,
+            IConfiguration configuration = null)
         {
             _productService = productService;
+            _productMapper = productMapper;
             _productsOnPage = configuration.GetValue<int>("Values:ProductsOnPage");
         }
 
         public async Task<ActionResult> Index()
         {
+            var products = await _productService.GetAsync();
+
             if (_productsOnPage == 0)
             {
-                return View(await _productService.GetAsync());
+                return View(products);
             }
-            else
-            {
-                var products = await _productService.GetAsync();
-                var productsOnPage = products.Take(Math.Abs(_productsOnPage));
 
-                return View(productsOnPage);
-            }
+            var productsOnPage = products
+                .OrderByDescending(p => p.ProductId)
+                .Take(Math.Abs(_productsOnPage));
+
+            return View(productsOnPage);
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> CreateAsync()
         {
-            return View();
-        }
+            var productView = await _productMapper.ProductMapToProductDetailsView(new Product());
 
-        public ActionResult Create()
-        {
-            return View();
+            return View(productView);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> CreateAsync(ProductDetailsView productView)
         {
             try
             {
+                var product = _productMapper.ProductDetailsViewMapToProduct(productView);
+                await _productService.CreateAsync(product);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (ModelException exception)
             {
-                return View();
+                ModelState.AddModelError(string.Empty, exception.Message);
+                return View(productView);
             }
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> EditAsync(int id)
         {
-            return View();
+            var product = await _productService.GetByIdAsync(id);
+            var productView = await _productMapper.ProductMapToProductDetailsView(product);
+
+            return View(productView);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(Product product)
         {
             try
             {
+                await _productService.EditAsync(product);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (ModelException exception)
             {
-                return View();
-            }
-        }
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                ModelState.AddModelError(string.Empty, exception.Message);
+                var productView = await _productMapper.ProductMapToProductDetailsView(product);
+                return View(productView);
             }
         }
     }

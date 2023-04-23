@@ -11,7 +11,7 @@ namespace WebShop.Core.Configs
     {
         public InfrastructureDependencyResolver(IServiceCollection serviceBuilder, string dbConnectionString)
         {
-            serviceBuilder.AddTransient<IRepository<Product>, ProductRepository>();
+            serviceBuilder.AddTransient<IProductRepository, ProductRepository>();
             serviceBuilder.AddTransient<IRepository<Category>, CategoryRepository>();
             serviceBuilder.AddTransient<IRepository<Supplier>, SupplierRepository>();
 

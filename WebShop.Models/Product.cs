@@ -7,12 +7,14 @@ namespace WebShop.Models
     {
         public int ProductId { get; set; }
 
-        [Required]
         [DisplayName("Name")]
-        public string ProductName { get; set; }
+        [Required(ErrorMessage = "Name is requierd")]
+        [MaxLength(40, ErrorMessage = "Name must be less then 40 characters")]
+        public string? ProductName { get; set; }
 
         [DisplayName("Quantity per unit")]
-        public string QuantityPerUnit { get; set; }
+        [MaxLength(20, ErrorMessage = "Name must be less then 20 characters")]
+        public string? QuantityPerUnit { get; set; }
 
         [DisplayName("Unit price")]
         public decimal? UnitPrice { get; set; }
@@ -27,14 +29,15 @@ namespace WebShop.Models
         public short? ReorderLevel { get; set; }
 
         [DisplayName("Discontinued")]
-        public bool? Discontinued { get; set; }
+        [Required(ErrorMessage = "Discontinued is requierd")]
+        public bool Discontinued { get; set; } = false;
 
         public int? SupplierId { get; set; }
 
-        public virtual Supplier Supplier { get; set; }
+        public virtual Supplier? Supplier { get; set; }
 
         public int? CategoryId { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual Category? Category { get; set; }
     }
 }
