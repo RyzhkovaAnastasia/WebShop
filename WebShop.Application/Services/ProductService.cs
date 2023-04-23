@@ -17,16 +17,20 @@ namespace WebShop.Core.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<Product>> GetAsync()
+        public async Task<IEnumerable<Product>> GetAsync(int? productNumber = default)
         {
-            var products = await _productRepository.GetAsync();
+            IEnumerable<Product> products;
 
-            if (products != null)
+            if (!productNumber.HasValue)
             {
-                return products;
+                products = await _productRepository.GetAsync();
+            }
+            else
+            {
+                products = _productRepository.GetByProductNumber(productNumber.Value);
             }
 
-            return new List<Product>();
+            return products ?? new List<Product>();
         }
 
         public async Task<Product> GetByIdAsync(int id)

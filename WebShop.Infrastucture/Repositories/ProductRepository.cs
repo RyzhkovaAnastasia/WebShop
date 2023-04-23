@@ -39,5 +39,10 @@ namespace WebShop.Infrastucture.Repositories
         {
             return await _context.Products.AsNoTracking().FirstOrDefaultAsync(condition);
         }
+
+        public IEnumerable<Product> GetByProductNumber(int productNumber)
+        {
+            return _context.Products.OrderByDescending(p => p.ProductId).Take(Math.Abs(productNumber));
+        }
     }
 }

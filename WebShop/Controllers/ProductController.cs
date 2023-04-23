@@ -26,18 +26,14 @@ namespace WebShop.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var products = await _productService.GetAsync();
-
-            if (_productsOnPage == 0)
+            if (_productsOnPage <= 0)
             {
-                return View(products);
+                return View(await _productService.GetAsync());
             }
 
-            var productsOnPage = products
-                .OrderByDescending(p => p.ProductId)
-                .Take(Math.Abs(_productsOnPage));
+            var products = await _productService.GetAsync(_productsOnPage);
 
-            return View(productsOnPage);
+            return View(products);
         }
 
         public async Task<ActionResult> CreateAsync()

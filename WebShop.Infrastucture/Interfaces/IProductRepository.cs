@@ -10,5 +10,7 @@ namespace WebShop.Infrastucture.Interfaces
         Task<Product> EditAsync(Product product);
 
         Task<Product> GetByConditionAsync(Expression<Func<Product, bool>> condition);
+
+        IEnumerable<Product> GetByProductNumber(int productNumber);
     }
 }
