@@ -1,27 +1,29 @@
-﻿public class ErrorHandlingMiddleware
+﻿namespace WebShop.Middleware
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ErrorHandlingMiddleware> _logger;
-
-    public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
+    public class ErrorHandlingMiddleware
     {
-        _next = next;
-        _logger = logger;   
-    }
+        private readonly RequestDelegate _next;
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
 
-    public async Task Invoke(HttpContext context)
-    {
-        try
+        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
         {
-            await _next(context);
+            _next = next;
+            _logger = logger;
         }
-        catch (Exception exception)
-        {
-            _logger.LogError(exception, exception.Message);
 
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            
-            context.Response.Redirect($"/Home/Error?message={exception.Message}");
+        public async Task Invoke(HttpContext context)
+        {
+            try
+            {
+                await _next(context);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, exception.Message, exception.Data);
+
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                context.Response.Redirect($"/Home/Error?message={exception.Message}");
+            }
         }
     }
 }

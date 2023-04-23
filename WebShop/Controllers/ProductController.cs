@@ -43,7 +43,6 @@ namespace WebShop.Controllers
         public async Task<ActionResult> CreateAsync()
         {
             var productView = await _productMapper.ProductMapToProductDetailsView(new Product());
-
             return View(productView);
         }
 

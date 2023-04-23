@@ -4,6 +4,7 @@ using Serilog;
 using Serilog.Events;
 using System.Text.Json;
 using WebShop.Configs;
+using WebShop.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 var path = Environment.CurrentDirectory;

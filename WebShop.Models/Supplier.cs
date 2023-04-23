@@ -9,7 +9,7 @@ namespace WebShop.Models
 
         [Required]
         [DisplayName("Company name")]
-        public string CompanyName { get; set; }
+        public string? CompanyName { get; set; }
 
         [DisplayName("Contact name")]
         public string? ContactName { get; set; }
@@ -35,6 +35,6 @@ namespace WebShop.Models
         [DisplayName("Home page")]
         public string? HomePage { get; set; }
 
-        public virtual IEnumerable<Product> Products { get; set; }
+        public virtual IEnumerable<Product>? Products { get; set; }
     }
 }
